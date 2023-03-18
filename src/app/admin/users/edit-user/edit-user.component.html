@@ -1,0 +1,104 @@
+<div>
+    <h1>Editar usuario</h1>
+
+    <div class="mt-5 alert alert-danger" *ngIf="errors">
+        Ha sucedido los siguientes errores:
+
+        <ul>
+            <li *ngFor="let error of errors">{{ error }}</li>
+        </ul>
+    </div>
+
+    <form class="mt-5" [formGroup]="form" (ngSubmit)="update()" autocomplete="off" *ngIf="form">
+        <mat-form-field class="mb-2 w-100" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text" placeholder="Nombre" formControlName="firstName" >
+            <mat-error>
+                <ng-container *ngIf="controlHasError('firstName', 'required')">
+                    Este campo es obligatorio
+                </ng-container>
+                <ng-container *ngIf="controlHasError('firstName', 'minlength')">
+                    Debe tener al menos 3 caracteres
+                </ng-container>
+                <ng-container *ngIf="controlHasError('firstName', 'maxlength')">
+                    Debe tener 45 caracteres como máximo
+                </ng-container>
+                <ng-container *ngIf="controlHasError('firstName', 'pattern')">
+                    Solo se permiten letras.
+                </ng-container>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="mb-2 w-100" appearance="outline">
+             <mat-label>Apellido</mat-label>
+            <input matInput type="text" placeholder="Apellido" formControlName="lastName">
+            <mat-error>
+                <ng-container *ngIf="controlHasError('lastName', 'required')">
+                    Este campo es obligatorio
+                </ng-container>
+                <ng-container *ngIf="controlHasError('lastName', 'pattern')">
+                    El valor es inválido
+                </ng-container>
+                <ng-container *ngIf="controlHasError('lastName', 'minlength')">
+                    Debe tener al menos 3 caracteres
+                </ng-container>
+                <ng-container *ngIf="controlHasError('lastName', 'maxlength')">
+                    Debe tener 45 caracteres como máximo
+                </ng-container>
+                <ng-container *ngIf="controlHasError('lastName', 'pattern')">
+                    Solo se permiten letras.
+                </ng-container>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="mb-2 w-100" appearance="outline">
+            <mat-label>Correo</mat-label>
+           <input matInput type="text" placeholder="Correo" formControlName="email">
+           <mat-error>
+               <ng-container *ngIf="controlHasError('email', 'required')">
+                   Este campo es obligatorio
+               </ng-container>
+               <ng-container *ngIf="controlHasError('email', 'pattern')">
+                Formato de correo inválido
+                </ng-container>
+           </mat-error>
+       </mat-form-field>
+
+        <mat-form-field class="mb-2 w-100" appearance="outline">
+            <mat-label>Contraseña</mat-label>
+           <input matInput type="text" placeholder="Contraseña" formControlName="password">
+           <mat-error>
+               <ng-container *ngIf="controlHasError('password', 'required')">
+                   Este campo es obligatorio
+               </ng-container>
+               <ng-container *ngIf="controlHasError('password', 'pattern')">
+                La contraseña debe contener al menos una letra mayúscula, 
+                una letra minúscula, un número, un carácter especial y tener una longitud mínima de 8 caracteres.
+               </ng-container>
+           </mat-error>
+       </mat-form-field>
+
+       <mat-form-field class="mb-2 w-100" appearance="outline">
+        <mat-label>Rol</mat-label>
+        <mat-select formControlName="role" disableRipple>
+            <mat-option value="ADMIN">Administrador</mat-option>
+            <mat-option value="USER">Usuario</mat-option>
+          </mat-select>
+       <mat-error>
+           <ng-container *ngIf="controlHasError('role', 'required')">
+               Este campo es obligatorio
+           </ng-container>
+       </mat-error>
+        </mat-form-field>
+
+        <div class="text-end">
+            <button mat-button routerLink="/admin/users">
+                Cancelar
+            </button>
+            <button mat-raised-button color="primary" class="ms-2">
+                Actualizar usuario
+            </button>
+        </div>
+    </form>
+
+</div>

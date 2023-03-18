@@ -1,0 +1,45 @@
+<div class="container" *ngIf="salesOrder">
+    <h1 class="fw-bold">Detalles de la venta</h1>
+    <div class="row mt-3 justify-content-between">
+        <div class="col-md-6">
+            <h3 class="fw-bold">Ítems de la venta</h3>
+
+            <div *ngIf="salesOrder.items.length; else cartIsEmptyButton">
+                <div *ngFor="let item of salesOrder.items">
+                    <div class="d-flex gap-2 py-2">
+                        <img [src]="item.book.coverPath | apiImg" alt="" class="mw-96px">
+                        <div>
+                            <div class="fw-bold"> {{ item.book.title }} </div>
+                            <p> {{ item.price | currency }} </p>
+                            <button mat-button color="primary" (click)="downloadBook(item)" [disabled]="item.downloadsAvailable < 1">
+                                <mat-icon>file_download</mat-icon>Dessargar
+                            </button>
+
+                            <span class="ms-2">
+                                {{ item.downloadsAvailable }}
+                                {{ item.downloadsAvailable | i18nPlural: {'=1': 'descarga disponible', 'other': 'descargas disponibles'} }}
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ng-template #cartIsEmptyButton>
+                <div>
+                    El carrito está vacío
+                </div>
+            </ng-template>
+        </div>
+        <div class="col-md-4 col-lg-3">
+            <h3 class="fw-bold">Resumen</h3>
+            <h5 class="fw-bold text-end">Total</h5>
+            <div class="fs-2 fw-bold text-end my-3">
+                {{ salesOrder.total | currency }}
+            </div>
+            <button class="w-100 mt-3" mat-button routerLink="/books">
+                Seguir comprando
+            </button>
+        </div>
+    </div>
+</div>

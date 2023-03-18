@@ -1,0 +1,63 @@
+<ng-container *ngIf="userPage">
+    <h1>Lista de usuarios</h1>
+
+    <div class="text-end">
+        <button mat-raised-button color="primary" routerLink="/admin/users/new">
+            Nuevo usuario
+        </button>
+    </div>
+
+    <table mat-table [dataSource]="userPage.content">
+
+        <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let user">
+                <div class="fw-bold"> {{ user.firstName }} </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef> Apellido </th>
+            <td mat-cell *matCellDef="let user"> {{ user.lastName }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fullName">
+            <th mat-header-cell *matHeaderCellDef> Nombre Completo </th>
+            <td mat-cell *matCellDef="let user"> {{ user.fullName }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Correo </th>
+            <td mat-cell *matCellDef="let user"> {{ user.email }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef> Rol </th>
+            <td mat-cell *matCellDef="let user"> {{ user.role === 'ADMIN' ? 'ADMINISTRADOR' : 'USUARIO' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef> F. creación </th>
+            <td mat-cell *matCellDef="let user"> {{ user.createdAt | date:'dd/MM/yyyy h:m a' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let user" class="text-end">
+                <button mat-icon-button [routerLink]="['/admin/users', user.id]" color="primary" matTooltip="Editar usuario">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button class="ms-2" (click)="deleteUser(user)" color="warn" matTooltip="Eliminar usuario">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"
+        [length]="userPage.totalElements" [pageSize]="userPage.size" (page)="paginateUsers($event)">
+    </mat-paginator>
+</ng-container>

@@ -1,0 +1,43 @@
+<div class="container">
+    <h1 class="fw-bold">Mi carrito</h1>
+    <div class="row mt-3 justify-content-between">
+        <div class="col-md-6">
+            <h3 class="fw-bold">Ítems del carrito</h3>
+            <div *ngIf="items.length; else cartIsEmptyButton">
+                <div *ngFor="let item of items">
+                    <div class="d-flex gap-2 py-2">
+                        <img [src]="item.coverPath | apiImg" alt="" class="mw-96px">
+                        <div>
+                            <div class="fw-bold"> {{ item.title }} </div>
+                            <p> {{ item.price | currency }} </p>
+                            <button mat-button color="warn" (click)="remove(item)">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ng-template #cartIsEmptyButton>
+                <div>
+                    El carrito está vacío
+                </div>
+            </ng-template>
+        </div>
+        <div class="col-md-4 col-lg-3">
+            <h3 class="fw-bold">Resumen</h3>
+            <h5 class="fw-bold text-end">Total</h5>
+            <div class="fs-2 fw-bold text-end my-3">
+                {{ total | currency }}
+            </div>
+            <button class="w-100 spinner" mat-raised-button color="primary" 
+            [class.spinner]="loading"
+            [disabled]="loading"
+            (click)="pay()">
+                <mat-icon>paypal</mat-icon>
+                Pagar con PayPal
+            </button>
+            <button class="w-100 mt-3" mat-button routerLink="/books">
+                Seguir comprando
+            </button>
+        </div>
+    </div>
+</div>

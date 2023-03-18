@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+    <span>Panel Administrativo</span>
+
+    <button mat-button routerLink="/" class="ms-3">
+        Inicio
+    </button>
+    <button mat-button routerLink="/admin/books" class="ms-3">
+        Administrar Libros
+    </button>
+    <button mat-button routerLink="/admin/users" class="ms-3">
+        Administrar Usuario
+    </button>
+    <span class="spacer"></span>
+
+    <button mat-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>account_circle</mat-icon> Pedrito
+    </button>
+
+    <mat-menu #userMenu="matMenu">
+        <button mat-menu-item>
+            <mat-icon>logout</mat-icon> Cerrar Sesión
+        </button>
+    </mat-menu>
+</mat-toolbar>
+
+ <div class="pt-5 container">
+    <router-outlet></router-outlet>
+ </div>
